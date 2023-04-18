@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f6f6f6;
+    }
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+    .card-header {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .form-label {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .form-control {
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #f2f2f2;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: #2dbe60;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-3">
+  <form action="/note/create" method="POST">
+    <div class="card">
+      <div class="card-header">Create new note</div>
+      <div class="card-body">
+        <label for="Title" class="form-label">Enter title</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="Title" name="title">
+        </div>
+
+        <label for="Content" class="form-label">Enter content</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="Content" name="content">
+        </div>
+
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" class="btn-primary">Create note</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>
