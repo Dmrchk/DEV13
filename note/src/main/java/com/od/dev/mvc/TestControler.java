@@ -1,4 +1,4 @@
-package com.dpiqb.notes.mvc;
+package com.od.dev.mvc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
