@@ -1,56 +1,62 @@
-package com.dpiqb.notes.mvc;
+package com.od.dev.mvc;
 
-import com.dpiqb.notes.Note;
-import com.dpiqb.notes.NoteService;
+import com.od.dev.note.Note;
+import com.od.dev.note.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
 
 @RequiredArgsConstructor
 @RequestMapping("/note")
 @Controller
 public class NoteController {
-  private final NoteService noteService;
-  @GetMapping("/list")
-  public ModelAndView getListOfNotes(){
-    ModelAndView result = new ModelAndView("notes");
-    result.addObject("noteList", noteService.listAll());
-    return result;
-  }
-  @PostMapping("/delete")
-  public RedirectView deleteNote(@RequestParam long id){
-    noteService.deleteById(id);
-    return new RedirectView("/note/list");
-  }
-  @GetMapping("/edit")
-  public ModelAndView editNote(@RequestParam Long id){
-    ModelAndView result = new ModelAndView("addOrEditNote");
-    result.addObject("note", noteService.getById(id));
-    return result;
-  }
-  @PostMapping("/edit")
-  public RedirectView editNote(@RequestParam long id, @RequestParam String title, @RequestParam String content){
-    Note note = new Note();
-    note.setId(id);
-    note.setTitle(title);
-    note.setContent(content);
-    noteService.update(note);
-    return new RedirectView("/note/list");
-  }
-  @GetMapping("/add")
-  public ModelAndView addNote(){
-    ModelAndView result = new ModelAndView("addOrEditNote");
-    result.addObject("note", null);
-    return result;
-  }
-  @PostMapping("/add")
-  public RedirectView addNote(@RequestParam String title, @RequestParam String content){
-    Note note = new Note();
-    note.setTitle(title);
-    note.setContent(content);
-    noteService.add(note);
-    return new RedirectView("/note/list");
-  }
+    private final NoteService noteService;
+
+    @GetMapping("/list")
+    public ModelAndView getNotes() {
+        ModelAndView modelAndView = new ModelAndView("note/note");
+        modelAndView.addObject("notes", noteService.listAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/create")
+    public String createNote() {
+        return ("note/create-note");
+    }
+
+    @PostMapping("/create")
+    public RedirectView create(@ModelAttribute Note note) {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/note/list");
+        noteService.add(note);
+        return redirectView;
+    }
+
+    @GetMapping("/delete")
+    public RedirectView delete(@RequestParam long id) {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/note/list");
+        noteService.deleteById(id);
+        return redirectView;
+    }
+
+    @GetMapping("/edit")
+    public String editNote(Model model,
+                           @RequestParam long id) {
+        Note note = noteService.getById(id);
+        model.addAttribute("note", note);
+        return ("note/edit-note");
+    }
+
+    @PostMapping("/edit")
+    public RedirectView edit(@ModelAttribute Note note) {
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/note/list");
+        noteService.update(note);
+        return redirectView;
+    }
 }
